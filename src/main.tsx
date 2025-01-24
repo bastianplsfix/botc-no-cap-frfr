@@ -1,10 +1,22 @@
+// src/main.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
-import { FakeHelloRepository } from "./domain/HelloRepository";
 
-const helloRepository = new FakeHelloRepository();
+// Import both repositories
+import {
+  FakeHelloRepository,
+  RealHelloRepository,
+} from "./domain/HelloRepository";
+
+// Decide based on a Vite environment variable or something else
+const isFake = import.meta.env.VITE_FAKE === "true";
+
+// Pick the repository
+const helloRepository = isFake
+  ? new FakeHelloRepository()
+  : new RealHelloRepository();
 
 // Set up a Router instance with typed context
 const router = createRouter({
@@ -15,12 +27,12 @@ const router = createRouter({
   },
 });
 
-// Register things for type safety
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
 }
+
 const rootElement = document.getElementById("app")!;
 
 if (!rootElement.innerHTML) {

@@ -7,15 +7,21 @@ export interface HelloRepository {
   getHelloData(): Promise<HelloData>;
 }
 
-/**
- * A simple in-memory (or "fake") implementation.
- * Later you could add a "RealHelloRepository" that fetches from an API.
- */
 export class FakeHelloRepository implements HelloRepository {
   async getHelloData(): Promise<HelloData> {
     return {
-      message: "Hello from the repository!",
+      message: "Hello from the FAKE repository!",
       timestamp: Date.now(),
     };
+  }
+}
+
+export class RealHelloRepository implements HelloRepository {
+  async getHelloData(): Promise<HelloData> {
+    const response = await fetch("https://api.example.com/hello");
+    if (!response.ok) {
+      throw new Error("Failed to fetch hello data");
+    }
+    return await response.json(); // should match { message, timestamp }
   }
 }
