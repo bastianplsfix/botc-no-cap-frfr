@@ -6,9 +6,11 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { FakeHelloRepository } from "../domain/HelloRepository";
+import { QueryClient } from "@tanstack/react-query";
 
 interface RouterContext {
   helloRepository: FakeHelloRepository;
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
