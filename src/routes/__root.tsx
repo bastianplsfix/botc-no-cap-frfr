@@ -1,15 +1,14 @@
-import * as React from "react";
 import {
   Link,
   Outlet,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { FakeHelloRepository } from "../domain/HelloRepository";
+import { HelloRepository } from "../domain/HelloRepository";
 import { QueryClient } from "@tanstack/react-query";
 
 interface RouterContext {
-  helloRepository: FakeHelloRepository;
+  helloRepository: HelloRepository;
   queryClient: QueryClient;
 }
 
