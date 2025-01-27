@@ -3,11 +3,13 @@ import {
   Outlet,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { HelloRepository } from "../domain/HelloRepository";
-import { QueryClient } from "@tanstack/react-query";
+import {TanStackRouterDevtools} from "@tanstack/router-devtools";
+import {LoanApplicationRepository} from "../domain/LoanApplicationRepository";
+import {QueryClient} from "@tanstack/react-query";
+import {HelloRepository} from "../domain/HelloRepository";
 
 interface RouterContext {
+  loanApplicationRepository: LoanApplicationRepository;
   helloRepository: HelloRepository;
   queryClient: QueryClient;
 }
@@ -25,10 +27,18 @@ function RootComponent() {
           activeProps={{
             className: "font-bold",
           }}
-          activeOptions={{ exact: true }}
+          activeOptions={{exact: true}}
         >
           Home
         </Link>{" "}
+        <Link
+          to="/loan"
+          activeProps={{
+            className: "font-bold",
+          }}
+        >
+          Loan
+        </Link>
         <Link
           to="/hello"
           activeProps={{
@@ -38,9 +48,9 @@ function RootComponent() {
           Hello
         </Link>
       </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools position="bottom-right" />
+      <hr/>
+      <Outlet/>
+      <TanStackRouterDevtools position="bottom-right"/>
     </>
   );
 }

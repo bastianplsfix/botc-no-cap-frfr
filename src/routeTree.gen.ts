@@ -11,10 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoanImport } from './routes/loan'
 import { Route as HelloImport } from './routes/hello'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const LoanRoute = LoanImport.update({
+  id: '/loan',
+  path: '/loan',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const HelloRoute = HelloImport.update({
   id: '/hello',
@@ -46,6 +53,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HelloImport
       parentRoute: typeof rootRoute
     }
+    '/loan': {
+      id: '/loan'
+      path: '/loan'
+      fullPath: '/loan'
+      preLoaderRoute: typeof LoanImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +68,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/hello': typeof HelloRoute
+  '/loan': typeof LoanRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/hello': typeof HelloRoute
+  '/loan': typeof LoanRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/hello': typeof HelloRoute
+  '/loan': typeof LoanRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/hello'
+  fullPaths: '/' | '/hello' | '/loan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/hello'
-  id: '__root__' | '/' | '/hello'
+  to: '/' | '/hello' | '/loan'
+  id: '__root__' | '/' | '/hello' | '/loan'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HelloRoute: typeof HelloRoute
+  LoanRoute: typeof LoanRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HelloRoute: HelloRoute,
+  LoanRoute: LoanRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +116,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/hello"
+        "/hello",
+        "/loan"
       ]
     },
     "/": {
@@ -105,6 +125,9 @@ export const routeTree = rootRoute
     },
     "/hello": {
       "filePath": "hello.tsx"
+    },
+    "/loan": {
+      "filePath": "loan.tsx"
     }
   }
 }
